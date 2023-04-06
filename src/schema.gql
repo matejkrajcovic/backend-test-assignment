@@ -1,0 +1,22 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Book {
+  id: Int!
+  title: String!
+  author: String!
+  publicationYear: Int!
+  genres: [String!]!
+  rating: Int!
+}
+
+type Query {
+  books(author: String, title: String): [Book!]!
+}
+
+type Mutation {
+  createBook(title: String!, author: String!, publicationYear: Int!, genres: [String!]!, rating: Int!): Book!
+  updateBook(id: Int!, title: String, author: String, publicationYear: Int, genres: [String!], rating: Int): Book!
+  deleteBook(id: Float!): Book!
+}
