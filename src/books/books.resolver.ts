@@ -10,6 +10,8 @@ import {
 import { Book } from './models/books.model';
 import { BooksService } from './books.service';
 import { BookVersionsService } from 'src/book-versions/book-versions.service';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Resolver((of: any) => Book)
 export class BooksResolver {
@@ -27,11 +29,13 @@ export class BooksResolver {
   }
 
   @ResolveField()
+  @UseGuards(AuthGuard)
   async bookVersions(@Parent() book: Book) {
     return this.bookVersionsService.findAll(book.id);
   }
 
   @Mutation((returns) => Book)
+  @UseGuards(AuthGuard)
   async createBook(
     @Args({ name: 'title' }) title: string,
     @Args({ name: 'author' }) author: string,
@@ -49,6 +53,7 @@ export class BooksResolver {
   }
 
   @Mutation((returns) => Book)
+  @UseGuards(AuthGuard)
   async updateBook(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args({ name: 'title', nullable: true }) title?: string,
@@ -70,6 +75,7 @@ export class BooksResolver {
   }
 
   @Mutation((returns) => Book)
+  @UseGuards(AuthGuard)
   async deleteBook(@Args({ name: 'id' }) id: number) {
     return this.booksService.delete(id);
   }

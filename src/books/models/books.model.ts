@@ -21,6 +21,8 @@ export class Book {
   @Field((type) => Int)
   rating: number;
 
-  @Field((type) => [BookVersion])
+  @Field((type) => [BookVersion], {
+    description: 'Available only to logged in users.',
+  })
   bookVersions: BookVersion[];
 }

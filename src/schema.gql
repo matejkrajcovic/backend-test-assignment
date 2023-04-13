@@ -25,6 +25,8 @@ type Book {
   publicationYear: Int!
   genres: [String!]!
   rating: Int!
+
+  """Available only to logged in users."""
   bookVersions: [BookVersion!]!
 }
 
