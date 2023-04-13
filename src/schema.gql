@@ -31,7 +31,7 @@ type Book {
 }
 
 type Query {
-  books(author: String, title: String): [Book!]!
+  books(author: String, title: String, cursor: Int, take: Int): [Book!]!
 }
 
 type Mutation {

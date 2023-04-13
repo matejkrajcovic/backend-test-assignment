@@ -10,12 +10,26 @@ export class BooksService {
     private bookVersionsService: BookVersionsService,
   ) {}
 
-  async findAll(author?: string, title?: string): Promise<Book[] | null> {
+  async findAll(
+    author?: string,
+    title?: string,
+    cursor?: number,
+    take?: number,
+  ): Promise<Book[] | null> {
     return this.prisma.book.findMany({
       where: {
         ...(author ? { author: { contains: author } } : {}),
         ...(title ? { title: { contains: title } } : {}),
       },
+      take,
+      ...(cursor
+        ? {
+            cursor: {
+              id: cursor,
+            },
+            skip: 1, // skip cursor
+          }
+        : {}),
     });
   }
 

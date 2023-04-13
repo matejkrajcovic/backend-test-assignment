@@ -24,8 +24,10 @@ export class BooksResolver {
   async books(
     @Args('author', { nullable: true }) author?: string,
     @Args('title', { nullable: true }) title?: string,
+    @Args('cursor', { nullable: true, type: () => Int }) cursor?: number,
+    @Args('take', { nullable: true, type: () => Int }) take?: number,
   ) {
-    return this.booksService.findAll(author, title);
+    return this.booksService.findAll(author, title, cursor, take);
   }
 
   @ResolveField()
