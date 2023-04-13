@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Book } from '@prisma/client';
+import { BookVersionsService } from 'src/book-versions/book-versions.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class BooksService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private bookVersionsService: BookVersionsService,
+  ) {}
 
   async findAll(author?: string, title?: string): Promise<Book[] | null> {
     return this.prisma.book.findMany({
@@ -35,7 +39,12 @@ export class BooksService {
     genres?: string[],
     rating?: number,
   ): Promise<Book> {
-    await this.throwIfNotFound(bookId);
+    const book = await this.prisma.book.findFirst({ where: { id: bookId } });
+    if (!book) {
+      throw new NotFoundException();
+    }
+
+    await this.bookVersionsService.create(book);
 
     return this.prisma.book.update({
       where: { id: bookId },

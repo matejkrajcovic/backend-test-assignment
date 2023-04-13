@@ -8,12 +8,14 @@ import { PrismaModule } from './prisma/prisma.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { BookVersionsModule } from './book-versions/book-versions.module';
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
     BooksModule,
+    BookVersionsModule,
     PrismaModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

@@ -2,6 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type BookVersion {
+  id: Int!
+  title: String!
+  author: String!
+  publicationYear: Int!
+  genres: [String!]!
+  rating: Int!
+  bookVersions: Book!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Book {
   id: Int!
   title: String!
@@ -9,6 +25,7 @@ type Book {
   publicationYear: Int!
   genres: [String!]!
   rating: Int!
+  bookVersions: [BookVersion!]!
 }
 
 type Query {

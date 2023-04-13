@@ -1,16 +1,34 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Book } from './books.model';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+import { Book } from './models/books.model';
 import { BooksService } from './books.service';
+import { BookVersionsService } from 'src/book-versions/book-versions.service';
 
 @Resolver((of: any) => Book)
 export class BooksResolver {
-  constructor(private booksService: BooksService) {}
+  constructor(
+    private booksService: BooksService,
+    private bookVersionsService: BookVersionsService,
+  ) {}
+
   @Query((returns) => [Book])
   async books(
     @Args('author', { nullable: true }) author?: string,
     @Args('title', { nullable: true }) title?: string,
   ) {
-    return await this.booksService.findAll(author, title);
+    return this.booksService.findAll(author, title);
+  }
+
+  @ResolveField()
+  async bookVersions(@Parent() book: Book) {
+    return this.bookVersionsService.findAll(book.id);
   }
 
   @Mutation((returns) => Book)

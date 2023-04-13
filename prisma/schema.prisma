@@ -17,10 +17,23 @@ model User {
 }
 
 model Book {
+  id              Int           @id @default(autoincrement())
+  title           String
+  author          String
+  publicationYear Int
+  genres          String[]
+  rating          Int
+  oldVersions     BookVersion[]
+}
+
+model BookVersion {
   id              Int      @id @default(autoincrement())
   title           String
   author          String
   publicationYear Int
   genres          String[]
   rating          Int
+  book            Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId          Int
+  createdAt       DateTime @default(now())
 }
