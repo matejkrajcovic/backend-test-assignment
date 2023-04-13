@@ -37,5 +37,5 @@ type Query {
 type Mutation {
   createBook(title: String!, author: String!, publicationYear: Int!, genres: [String!]!, rating: Int!): Book!
   updateBook(id: Int!, title: String, author: String, publicationYear: Int, genres: [String!], rating: Int): Book!
-  deleteBook(id: Float!): Book!
+  deleteBook(id: Int!): Book!
 }

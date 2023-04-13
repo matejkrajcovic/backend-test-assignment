@@ -78,7 +78,7 @@ export class BooksResolver {
 
   @Mutation((returns) => Book)
   @UseGuards(AuthGuard)
-  async deleteBook(@Args({ name: 'id' }) id: number) {
+  async deleteBook(@Args({ name: 'id', type: () => Int }) id: number) {
     return this.booksService.delete(id);
   }
 }
